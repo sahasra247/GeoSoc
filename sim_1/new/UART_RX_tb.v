@@ -2,9 +2,9 @@
 
 module UART_RX_tb;
 
-   parameter c_CLOCK_PERIOD_NS = 100;
+   parameter c_CLOCK_PERIOD_NS = 1;
    parameter c_CLKS_PER_BIT    = 87;
-   parameter c_BIT_PERIOD      = 8600;
+   parameter c_BIT_PERIOD      = 87;
 
   // Signals
   reg clk = 0;
@@ -24,7 +24,7 @@ module UART_RX_tb;
   );
 
   // Clock generation (100MHz = 10ns)
-  always #(c_CLOCK_PERIOD_NS/2) clk <= !clk;
+  always #0.5 clk <= !clk;
 
   // Task to send one UART byte serially
   task UART_WRITE_BYTE;
@@ -32,12 +32,19 @@ module UART_RX_tb;
    input [7:0] byte;
   integer i;
   begin
-    i_Rx_Serial = 0;           // Start bit
-    #(c_BIT_PERIOD);         // Hold start bit
-
+    i_Rx_Serial = 0;
+    $display("checkpoint tb start bit before");         // Start bit
+    #(c_BIT_PERIOD);
+    #1;
+      
+    
+           // Hold start bit
+    $display("checkpoint tb start bit");
     for (i = 0; i < 8; i = i + 1) begin
-      i_Rx_Serial = byte[i];   // Data bits
+      i_Rx_Serial = byte[i]; 
+      $display("[%0t ns] i_Rx_Serial = %d", $time, i_Rx_Serial);  // Data bits
       #(c_BIT_PERIOD);
+      $display("[%0t ns] i_Rx_Serial = %d ", $time, i_Rx_Serial);
     end
 
     i_Rx_Serial = 1;           // Stop bit
@@ -58,9 +65,15 @@ endtask
     begin
     @(posedge clk);
         rst=1;
-        #20;
+        #2;
+        $display("checkpoint");
       UART_WRITE_BYTE(8'h3F);
+      UART_WRITE_BYTE(8'h3A);
       @(posedge clk);
+      #2000000 // 2 milliseconds to comfortably receive and clean up
+        $finish;
       end
+      
+
 
 endmodule

@@ -107,7 +107,7 @@ module UART_TX
 
         s_CLEANUP:
         begin
-          r_Tx_Done <= 1'b0; // Clear done after one cycle
+          r_Tx_Done <= 1'b1; // Clear done after one cycle
           r_SM_Main <= s_IDLE;
         end
 

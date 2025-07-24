@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-`timescale 1ns / 1ps
+
 
 module top_mod_tb;
 
@@ -79,7 +79,7 @@ module top_mod_tb;
     #300; // Wait for UART to transmit entire buffer
 
     $display("[%0t ns] 🧪 Simulation complete", $time);
-    $stop;
+    
   end
 
   // Task to send each byte with valid pulse

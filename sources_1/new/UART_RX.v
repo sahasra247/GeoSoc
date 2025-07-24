@@ -43,7 +43,8 @@ module UART_RX
        s_RX_START_BIT: begin
   $display("state s_RX_START_BIT");
 
-  if (r_Clock_Count == (CLKS_PER_BIT - 1) / 2) begin
+  if (r_Clock_Count == (CLKS_PER_BIT - 1)) begin
+    $display("[%0t ns] serial = %d", $time, i_Rx_Serial);
     if (i_Rx_Serial == 0) begin  // Confirm it's still a start bit
       r_Clock_Count <= 0;
       r_SM_Main     <= s_RX_DATA_BITS;
@@ -53,27 +54,38 @@ module UART_RX
     end
   end else begin
     r_Clock_Count <= r_Clock_Count + 1;
+    $display("[%0t ns] clock = %d", $time, r_Clock_Count);
   end
 end
 
      s_RX_DATA_BITS: begin 
      $display("s_RX_DATA_BITS"); 
      $display("[%0t ns] Bit %0d sampled: %b", $time, r_Bit_Index, i_Rx_Serial); 
-     if (r_Bit_Index < 8)begin
+     if (r_Bit_Index < 7)begin
             if (r_Clock_Count < CLKS_PER_BIT - 1) begin
                 r_Clock_Count <= r_Clock_Count + 1;
+                $display("[%0t ns] clock2 = %d", $time, r_Clock_Count);
             end else 
             begin
                 r_Clock_Count <= 0;
                 r_Rx_Byte[r_Bit_Index] <= i_Rx_Serial;
+                $display("[%0t ns] serial = %d", $time, i_Rx_Serial);
+                $display("[%0t ns] byte = %d", $time, r_Rx_Byte[r_Bit_Index]);
+                
                 r_Bit_Index <= r_Bit_Index + 1;
                 r_SM_Main     <= s_RX_DATA_BITS;
+                $display("[%0t ns] bits = %d", $time, r_Bit_Index);
+                
                 end
                 
                 end
-      else
+      if (r_Bit_Index == 7) begin
           r_SM_Main <= s_RX_STOP_BIT;
-          r_Bit_Index<=0;
+          $display("[%0t ns] byte SM_stop = %d", $time, r_Rx_Byte);
+          
+          r_Bit_Index <= 0;
+          $display("[%0t ns] r_bit_index stop = %d", $time, r_Bit_Index);
+          end
 
       end
 
