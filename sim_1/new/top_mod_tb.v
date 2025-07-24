@@ -43,12 +43,12 @@ module top_mod_tb;
   );
 
   // Clock generation (10ns period = 100MHz)
-  always #5 clk = ~clk;
+  always #0.5 clk = ~clk;
 
   // Stimulus
   initial begin
     $display("[%0t ns] 🧪 Starting GPS sentence simulation...", $time);
-    #20 rst = 0;
+    #2 rst = 0;
 
     // Send: $GPGGA,123519,3130,N,12024,E
     // Format: Header, Time, Latitude, Longitude
@@ -76,7 +76,7 @@ module top_mod_tb;
     send_char(8'h32); send_char(8'h34);                   // '2','4'
     send_char(8'h2C); send_char(8'h45); // ',', 'E'
 
-    #300; // Wait for UART to transmit entire buffer
+    #30; // Wait for UART to transmit entire buffer
 
     $display("[%0t ns] 🧪 Simulation complete", $time);
     
@@ -89,9 +89,9 @@ module top_mod_tb;
       uart_data  = char;
       uart_valid = 1;
       $display("[%0t ns] 📥 Sent UART char: '%c' (0x%h)", $time, char, char);
-      #10;
+      #1;
       uart_valid = 0;
-      #10;
+      #1;
     end
   endtask
 

@@ -44,7 +44,7 @@ module UART_TB;
   );
 
   // Clock generation: 100 MHz
-  always #5 clk = ~clk;
+  always #0.5 clk = ~clk;
 
   // Monitor outputs
   initial begin
@@ -53,17 +53,17 @@ module UART_TB;
 
   // Stimulus
   initial begin
-    #20;
+    #2;
     tx_byte = 8'hA5;  // Example byte to send
     tx_dv = 1;
-    #10;
+    #1;
     tx_dv = 0;
 
     // Wait for transmission complete
     wait(tx_done);
     $display("✅ Byte 0xA5 transmitted at time %t", $time);
 
-    #50 $finish;
+    #5 $finish;
   end
 
 endmodule

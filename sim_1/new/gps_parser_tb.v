@@ -29,12 +29,12 @@ module gps_parser_tb;
   );
 
   // Clock generation (100MHz = 10ns period)
-  always #5 clk = ~clk;
+  always #0.5 clk = ~clk;
 
   // Stimulus sequence
   initial begin
     $display("[%0t ns] 🔧 Resetting parser...", $time);
-    #20 rst = 0;
+    #2 rst = 0;
     $display("[%0t ns] 🚀 Starting test sequence...", $time);
 
     // Simulate sending "$GPGGA,123519,3130,12024"
@@ -93,9 +93,9 @@ module gps_parser_tb;
       uart_data  = char;
       uart_valid = 1;
       $display("[%0t ns] 📤 Sending Char: '%c' (Hex: %h)", $time, char, char);
-      #10;
+      #1;
       uart_valid = 0;
-      #10;
+      #1;
     end
   endtask
 

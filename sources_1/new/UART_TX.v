@@ -59,10 +59,14 @@ module UART_TX
 
         s_TX_START_BIT:
         begin
+        $display("start");
           o_Tx_Serial <= 1'b0;
 
-          if (r_Clock_Count < CLKS_PER_BIT - 1)
+          if (r_Clock_Count < CLKS_PER_BIT - 1) begin
             r_Clock_Count <= r_Clock_Count + 1;
+            $display("count1:%d",r_Clock_Count);
+            end
+            
           else
           begin
             r_Clock_Count <= 0;
@@ -72,16 +76,17 @@ module UART_TX
 
         s_TX_DATA_BITS:
         begin
-          o_Tx_Serial <= r_Tx_Data[r_Bit_Index];
-
+        $display("databites");
           if (r_Clock_Count < CLKS_PER_BIT - 1)
             r_Clock_Count <= r_Clock_Count + 1;
           else
           begin
             r_Clock_Count <= 0;
 
-            if (r_Bit_Index < 7)
-              r_Bit_Index <= r_Bit_Index + 1;
+            if (r_Bit_Index < 7) begin
+            o_Tx_Serial <= r_Tx_Data[r_Bit_Index];
+            r_Bit_Index <= r_Bit_Index + 1;
+              end
             else
             begin
               r_Bit_Index <= 0;
@@ -92,14 +97,18 @@ module UART_TX
 
         s_TX_STOP_BIT:
         begin
+         $display("stop");
           o_Tx_Serial <= 1'b1;
 
-          if (r_Clock_Count < CLKS_PER_BIT - 1)
+          if (r_Clock_Count < CLKS_PER_BIT - 1) begin
             r_Clock_Count <= r_Clock_Count + 1;
+            $display("count:%d",r_Clock_Count);
+            end
           else
           begin
             r_Clock_Count <= 0;
             r_Tx_Done     <= 1'b1;
+            $display("done");
             r_Tx_Active   <= 1'b0;
             r_SM_Main     <= s_CLEANUP;
           end
@@ -107,6 +116,7 @@ module UART_TX
 
         s_CLEANUP:
         begin
+        $display("cleanup");
           r_Tx_Done <= 1'b1; // Clear done after one cycle
           r_SM_Main <= s_IDLE;
         end
