@@ -1,2 +1,2 @@
-# GeoSoc
-GeoSoc is a lightweight System-on-Chip module that integrates a GPS sentence parser with UART transmission and reception. It’s designed to decode NMEA data streams and relay positioning information over serial communication with minimal latency.
+# GParse
+This project focuses on designing and simulating a hardware module that parses GPS NMEA sentence data received via UART interface, targeting integration with commercial GPS receivers such as the NEO-7M. The design also facilitates transmitting the processed GPS data over UART or further communication interfaces.
