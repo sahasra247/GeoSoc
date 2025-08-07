@@ -1,11 +1,11 @@
 # GeoSoc
 This project focuses on designing and simulating a hardware module that parses GPS NMEA sentence data received via UART interface, targeting integration with commercial GPS receivers such as the NEO-7M. The design also facilitates transmitting the processed GPS data over UART or further communication interfaces.
 
-# UART-GPS Top-Level Module: `top_mod_complete`
+# UART-GPS Module:
 
 ## Overview
 
-The `top_mod_complete` module is a comprehensive design that interfaces with UART RX and UART TX modules, including a GPS data parser. It receives GPS data via UART serial input, processes/parses the GPS coordinates, and transmits the parsed latitude and longitude data back over UART.
+The module is a comprehensive design that interfaces with UART RX and UART TX modules, including a GPS data parser. It receives GPS data via UART serial input, processes/parses the GPS coordinates, and transmits the parsed latitude and longitude data back over UART.
 
 ## Features
 
