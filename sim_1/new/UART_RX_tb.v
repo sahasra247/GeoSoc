@@ -56,7 +56,7 @@ endtask
   // Monitor received data
   always @(posedge clk) begin
     if (o_Rx_DV) begin
-      $display("[%0t ns] ✅ UART_RX got byte: 0x%h ('%c')", $time, o_Rx_Byte, o_Rx_Byte);
+      $display("[%0t ns] UART_RX got byte: 0x%h ('%c')", $time, o_Rx_Byte, o_Rx_Byte);
     end
   end
 
