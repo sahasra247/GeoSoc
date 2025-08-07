@@ -83,7 +83,7 @@ The module is a comprehensive design that interfaces with UART RX and UART TX mo
   - `GPS_parser_mod.v`
   - `UART_TX.v`
   
-- Make sure these source files are available and included correctly in your project.
+
 - Adjust `CLKS_PER_BIT` parameter in `UART_RX` and `UART_TX` for your clock frequency and baud rate.
 
 
