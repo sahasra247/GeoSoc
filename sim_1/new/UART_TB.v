@@ -61,7 +61,7 @@ module UART_TB;
 
     // Wait for transmission complete
     wait(tx_done);
-    $display("✅ Byte 0xA5 transmitted at time %t", $time);
+    $display("Byte 0xA5 transmitted at time %t", $time);
 
     #5 $finish;
   end
