@@ -47,7 +47,7 @@ module top_mod_tb;
 
   // Stimulus
   initial begin
-    $display("[%0t ns] 🧪 Starting GPS sentence simulation...", $time);
+    $display("[%0t ns] Starting GPS sentence simulation...", $time);
     #2 rst = 0;
 
     // Send: $GPGGA,123519,3130,N,12024,E
@@ -78,7 +78,7 @@ module top_mod_tb;
 
     #30; // Wait for UART to transmit entire buffer
 
-    $display("[%0t ns] 🧪 Simulation complete", $time);
+    $display("[%0t ns]  Simulation complete", $time);
     
   end
 
@@ -88,7 +88,7 @@ module top_mod_tb;
     begin
       uart_data  = char;
       uart_valid = 1;
-      $display("[%0t ns] 📥 Sent UART char: '%c' (0x%h)", $time, char, char);
+      $display("[%0t ns] Sent UART char: '%c' (0x%h)", $time, char, char);
       #1;
       uart_valid = 0;
       #1;
